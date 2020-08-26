@@ -1,0 +1,69 @@
+---
+date: '2020-08-16'
+slug: 'refactor-tic-tac-toe-with-a-state-machine'
+title: 'Refactor Tic Tac Toe With A State Machine'
+subtitle: null
+description: ''
+excerpt: null
+tags: ['React']
+relatedPostsSlugs: []
+---
+
+In my [last post](/tic-tac-toe), we built the game of tic-tac-toe in React using the `useReducer` hook. I want to replace the state management of our game with an XState `Machine` and the `useMachine` hook from `@xstate/react`. This gives us a great opportunity to see what changes and if any improvements come from using a state machine instead.
+
+I'm not going to repost the final version of my previous tic-tac-toe code in this blog. You can either read that post or look at the code [here](https://github.com/kyleshevlin/blog/blob/main/src/posts/published/tic-tac-toe/FourthGame.js). That said, let's identify the changes that will need to be made in this refactor.
+
+- `status`es will become game states
+- `grid` and `turn` will become the `context` of the state machine
+- Our states will handle the `case`s of our `reducer`
+- Functions in our `reducer` will become their corresponding `actions` in our state chart
+
+Let's start by adding some of a `Machine` to our code. We can accomplish the first two changes in our list right away:
+
+```javascript
+import React from 'react'
+import { Machine } from 'xstate'
+import { useMachine } from '@xstate/react'
+//...
+
+const ticTacToeMachine = Machine({
+  id: 'tic-tac-toe',
+  initial: 'inProgress',
+  context: {
+    grid: newTicTacToeGrid(),
+    turn: 'X',
+  },
+  states: {
+    inProgress: {},
+    success: {},
+  },
+})
+```
+
+We import the necessary packages and we start to create our state chart. The `initial` state of our game is `inProgress` and in our original implementation, the only other state we had was a `success` state, so we add shells for these two states. There's a good chance we'll add a state or two as we add changes. Lastly, we take the infinite data of our `reducer`'s `initialState` and move it into the `context` of the machine.
+
+Now that we have this in place, let's add our events to their appropriate states.
+
+```javascript
+const ticTacToeMachine = Machine({
+  id: 'tic-tac-toe',
+  initial: 'inProgress',
+  context: {
+    grid: newTicTacToeGrid(),
+    turn: 'X',
+  },
+  states: {
+    inProgress: {
+      on: {
+        CLICK: {},
+        RESET: {},
+      },
+    },
+    success: {
+      on: {
+        RESET: {},
+      },
+    },
+  },
+})
+```
