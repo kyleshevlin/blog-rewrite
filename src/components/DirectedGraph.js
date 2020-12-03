@@ -1,6 +1,6 @@
 import React from 'react'
-import { bs } from '../../../shevy'
-import { v } from '../../../utils'
+import { bs } from '../shevy'
+import { v } from '../utils'
 
 // The absurd width is partnered with negative margins to create an svg that almost
 // is guaranteed to take up the full width on any gargantuan sized screen. It also

@@ -1,0 +1,43 @@
+---
+date: '2020-11-16'
+slug: 'graphs-and-queens-gambit'
+title: "Graphs And Queen's Gambit"
+subtitle: null
+description: ''
+excerpt: null
+tags: ['JavaScript', 'React']
+relatedPostsSlugs: []
+---
+
+import DirectedGraph from '../../../components/DirectedGraph'
+
+<DirectedGraph
+  caption="d4 openings"
+  data={{
+    nodes: [
+      { id: '1. d4' },
+      { id: '1. ...d5' },
+      { id: '1. ...Nf6' },
+      { id: '2. c4' },
+      { id: '2. ...e6' },
+      { id: '2. ...g6' },
+      { id: '3. Nc3' },
+      { id: '3. ...Bg7' },
+    ],
+    links: [
+      { source: '1. d4', target: '1. ...d5' },
+      { source: '1. d4', target: '1. ...Nf6' },
+      { source: '1. ...d5', target: '2. c4', opening: "Queen's Gambit" },
+      { source: '1. ...Nf6', target: '2. c4' },
+      { source: '2. c4', target: '2. ...e6', opening: 'Nimzo-Indian' },
+      { source: '2. c4', target: '2. ...g6' },
+      { source: '2. ...g6', target: '3. Nc3' },
+      {
+        source: '3. Nc3',
+        target: '3. ...Bg7',
+        opening: "King's Indian Defense",
+      },
+    ],
+  }}
+  showNodeIDs
+/>
