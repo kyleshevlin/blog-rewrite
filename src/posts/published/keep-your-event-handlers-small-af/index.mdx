@@ -1,0 +1,18 @@
+---
+date: '2020-12-20'
+slug: 'keep-your-event-handlers-small-af'
+title: 'Keep Your Event Handlers Small AF'
+subtitle: null
+description: ''
+excerpt: null
+tags: ['React']
+relatedPostsSlugs: []
+---
+
+Learning and using state machines has convinced me of a particular pattern: event handler functions should do one thing and one thing only, `send` the same `event` for the same user interaction to whatever handles your state management. <Marker content="The words <code>send</code> and <code>event</code> have particular meaning in regards to state machines. You may substitute <code>dispatch</code> and <code>action</code> if that makes you more comfortable." />
+
+They should not contain logic. They should not contain other functions. They should `send` the same `event` to your state manager for the same user interaction. Every. Single. Time.
+
+I try not to be so absolutist with my advice, but in this case, I think it makes a lot of sense.
+
+I personally think it's
